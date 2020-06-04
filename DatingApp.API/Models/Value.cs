@@ -4,6 +4,6 @@ namespace DatingApp.API.Models
     {
         public int Id { get; set; }
 
-        public string MyProperty { get; set; }
+        public string name { get; set; }
     }
 }
