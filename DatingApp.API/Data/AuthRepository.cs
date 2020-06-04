@@ -15,18 +15,18 @@ namespace DatingApp.API.Data
             this.context = context;
         }
 
-        public async Task<User> Login(User user, string password)
+        public async Task<User> Login(string username, string password)
         {
-            var user1 = await this.context.Users.FirstOrDefaultAsync(x => x.Username == user.Username);
+            var user1 = await this.context.Users.FirstOrDefaultAsync(x => x.Username == username);
 
-            if (user == null)  //no user found in the database
+            if (user1 == null)  //no user found in the database
                 return null;
 
             //if a user with the given username has been found, verify that the password created is the right one
             if (!VerifyPasswordHash(password, user1.PasswordHash, user1.PasswordSalt)) //wrong password entered
                 return null;
 
-                return user;
+                return user1;
         }
 
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
@@ -44,7 +44,7 @@ namespace DatingApp.API.Data
                         return false;
                 }
             }
-            return false;
+            return true;
         }
 
         public async Task<User> Register(User user, string password)
